@@ -3,9 +3,50 @@
 
 <head>
     <script type="text/javascript">
+        function getTimeFromDiff(hour,minute,diff){
+            hourdiff =  Math.floor((minute+diff)/60);
+            console.log("minute is "+minute);
+            console.log("diff is "+diff);
+            console.log("hourdiff is "+hourdiff);
+            if(hourdiff == 0){ //within an hour
+                minute = diff+minute;
+            }
+            else{
+                if(hourdiff+hour>23){
+                    hour = hour + hourdiff - 24;
+                }
+                else if(hourdiff + hour < 0){
+                    hour = hour+hourdiff+24;
+                }
+                else{
+                    hour = hour + hourdiff;
+                }
+                var remainMinute =  (minute+diff)%60;
+                console.log("remainMinute is "+remainMinute);
+                minute = remainMinute>0 ? remainMinute : remainMinute+60;
+            }
+            return [hour,minute]
+        }
         function btnAction()
         {
-            alert(document.getElementById("input-time").value);
+            var hour = document.getElementById("hour").value;
+            var minute = document.getElementById("minute").value;
+            var LatitudeValue = document.getElementById("Latitude-value").value;
+            var LatitudeLocation = document.getElementById("LatitudePosition").value;  
+            
+            LatitudeValue = LatitudeLocation == "E"? LatitudeValue : -LatitudeValue;
+            var latitudeDiff  =  LatitudeValue-120;
+            // if(LatitudeLocation == "E"){
+            // }
+            // else{
+            //     var latitudeDiff  = LatitudeValue+120;
+            // }
+                
+            minuteDiff = latitudeDiff*4;
+            var result = getTimeFromDiff(Number(hour),Number(minute),Number(minuteDiff));
+            document.getElementById("hour-beijing").innerHTML = result[0];
+            document.getElementById("minute-beijing").innerHTML = result[1];
+            
         };
 
     </script>
@@ -14,65 +55,40 @@
 
 
 <fieldset>
-
-    <?php
-    echo "My first PHP script!";
-    ?>
+   
     <legend>Time calculator</legend>
-    <div class="control">
-     <label for="meeting">Time:</label>
-     <input id="input-time" type="time" value="00:00"/>
-    </div>
+    <div class="time">
+     <label for="input-time">Beijing Time:</label>
+
+     <input id="hour" type="text" value="00" style="width:20px"/>
+     <span>:</span>
+     <input id="minute" type="text" value="00" style="width:20px"/>
+    </div> 
     
 
     <div class="control">
         <label for="Latitude">Latitude:</label>
-        <input id="Latitude-value" type="time" value="00:00"/>
-        <select id="Latitude">
+        <input id="Latitude-value" type="number" value="00:00"/>
+        <select id="LatitudePosition">
             
-            <option value="W">W</option>
             <option value="E">E</option>
-            <!-- <option value="UTC-1">UTC-1</option>
-            <option value="UTC-2">UTC-2</option>
-            <option value="UTC-3">UTC-3</option>
-            <option value="UTC-4">UTC-4</option>
-            <option value="UTC-5">UTC-5</option>
-            <option value="UTC-6">UTC-6</option>
-            <option value="UTC-7">UTC-7</option>
-            <option value="UTC-8">UTC-8</option>
-            <option value="UTC-9">UTC-9</option>
-            <option value="UTC-10">UTC-10</option>
-            <option value="UTC-11">UTC-11</option>
-            <option value="UTC-12">UTC-12</option>
-                
-            <option value="UTC">UTC</option>
-            <option value="UTC+1">UTC+1</option>
-            <option value="UTC+2">UTC+2</option>
-            <option value="UTC+3">UTC+3</option>
-            <option value="UTC+4">UTC+4</option>
-            <option value="UTC+5">UTC+5</option>
-            <option value="UTC+6">UTC+6</option>
-            <option value="UTC+7">UTC+7</option>
-            <option value="UTC+8">UTC+8</option>
-            <option value="UTC+9">UTC+9</option>
-            <option value="UTC+10">UTC+10</option>
-            <option value="UTC+11">UTC+11</option> -->
-
+            <option value="W">W</option>
+           
 
 
         </select>
     </div>
     <div>
-            <button type="button" onclick="btnAction()">Click Me!</button> 
+            <button type="button" onclick="btnAction()">Calculate!</button> 
     </div>
 
-    <div>
-            <label for="Beijing">Beijing:</label>
-    </div>
     <div>
             <label for="Local">Local:</label>
+            <span id='time'> 
+                <label id="hour-beijing">10</label>:
+                <label id="minute-beijing">00</label> 
+            </span>
     </div>
-
 
 
 </fieldset>
