@@ -54,19 +54,38 @@
                 minute = "0"+minute;
             }
             document.getElementById("hour-beijing").innerHTML = hour;
+            document.getElementById("colon").innerHTML = ":";
             document.getElementById("minute-beijing").innerHTML = minute;
             
         };
 
     </script>
+     <style type="text/css">
+        body {
+            background-color: lightblue;
+        }
+        fieldset {
+            text-align:center;
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+
+            background: #F2F2F2;
+            border: 1px solid #ccc;
+            box-shadow: 1px 1px 2px #fff inset,
+                        -1px -1px 2px #fff inset;
+     
+        }
+    </style>
 </head>
 <body>
 
 
 <fieldset>
    
-    <legend>Time calculator</legend>
+    
     <div class="time">
+            <div style="font-size: 2em;font-style: bold">Time calculator</div>
      <label for="input-time">Beijing Time:</label>
 
      <input id="hour" type="text" value="00" style="width:20px"/>
@@ -77,7 +96,7 @@
 
     <div class="control">
         <label for="Latitude">Latitude:</label>
-        <input id="Latitude-value" type="number" value="00:00"/>
+        <input id="Latitude-value" type="number" style="width:50px" value="00:00"/>
         <select id="LatitudePosition">
             
             <option value="E">E</option>
@@ -94,8 +113,9 @@
     <div>
             <label for="Local">Local:</label>
             <span id='time'> 
-                <label id="hour-beijing">00</label>:
-                <label id="minute-beijing">00</label> 
+                <label id="hour-beijing">Q</label>
+                <label id="colon">A</label>
+                <label id="minute-beijing">Q</label> 
             </span>
     </div>
 
