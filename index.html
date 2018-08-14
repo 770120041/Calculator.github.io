@@ -46,6 +46,12 @@
             var result = getTimeFromDiff(Number(hour),Number(minute),Number(minuteDiff));
             hour = result[0] == 0 ? "00":result[0];
             minute = result[1] == 0 ? "00" : result[1];
+            if(hour < 10){
+                hour = "0"+hour;
+            }
+            if(minute<10){
+                minute = "0"+minute;
+            }
             document.getElementById("hour-beijing").innerHTML = hour;
             document.getElementById("minute-beijing").innerHTML = minute;
             
