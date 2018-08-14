@@ -4,7 +4,7 @@
 <head>
     <script type="text/javascript">
         function getTimeFromDiff(hour,minute,diff){
-            hourdiff =  Math.floor((minute+diff)/60);
+            var hourdiff =  Math.floor((minute+diff)/60);
             console.log("minute is "+minute);
             console.log("diff is "+diff);
             console.log("hourdiff is "+hourdiff);
@@ -23,7 +23,7 @@
                 }
                 var remainMinute =  (minute+diff)%60;
                 console.log("remainMinute is "+remainMinute);
-                minute = remainMinute>0 ? remainMinute : remainMinute+60;
+                minute = remainMinute>=0 ? remainMinute : remainMinute+60;
             }
             return [hour,minute]
         }
@@ -44,8 +44,10 @@
                 
             minuteDiff = latitudeDiff*4;
             var result = getTimeFromDiff(Number(hour),Number(minute),Number(minuteDiff));
-            document.getElementById("hour-beijing").innerHTML = result[0];
-            document.getElementById("minute-beijing").innerHTML = result[1];
+            hour = result[0] == 0 ? "00":result[0];
+            minute = result[1] == 0 ? "00" : result[1];
+            document.getElementById("hour-beijing").innerHTML = hour;
+            document.getElementById("minute-beijing").innerHTML = minute;
             
         };
 
@@ -85,7 +87,7 @@
     <div>
             <label for="Local">Local:</label>
             <span id='time'> 
-                <label id="hour-beijing">10</label>:
+                <label id="hour-beijing">00</label>:
                 <label id="minute-beijing">00</label> 
             </span>
     </div>
