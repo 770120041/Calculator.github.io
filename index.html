@@ -5,24 +5,31 @@
         <meta charset="utf-8"/>
     <script type="text/javascript">
         function getTimeFromDiff(hour,minute,diff){
-            var hourdiff =  Math.floor((minute+diff)/60);
+            var hourdiff =  Math.floor((minute-diff)/60);
             console.log("minute is "+minute);
             console.log("diff is "+diff);
             console.log("hourdiff is "+hourdiff);
+            
             if(hourdiff == 0){ //within an hour
-                minute = diff+minute;
+                minute = diff-minute;
             }
             else{
-                if(hourdiff+hour>23){
+                if(hour+hourdiff>23){
                     hour = hour + hourdiff - 24;
+                    document.getElementById("before-or-later").style.visibility="visible";
+                    document.getElementById("before-or-later").innerHTML = "后一天";
                 }
-                else if(hourdiff + hour < 0){
-                    hour = hour+hourdiff+24;
+                else if(hour + hourdiff < 0){
+                    hour = hour + hourdiff+24;
+                    document.getElementById("before-or-later").style.visibility="visible";
+                    document.getElementById("before-or-later").innerHTML = "前一天";
                 }
                 else{
                     hour = hour + hourdiff;
+                    document.getElementById("before-or-later").style.visibility="hidden";
+                    console.log("blocked");
                 }
-                var remainMinute =  (minute+diff)%60;
+                var remainMinute =  (minute-diff)%60;
                 console.log("remainMinute is "+remainMinute);
                 minute = remainMinute>=0 ? remainMinute : remainMinute+60;
             }
@@ -33,15 +40,14 @@
             var hour = document.getElementById("hour").value;
             var minute = document.getElementById("minute").value;
             var LatitudeValue = document.getElementById("Latitude-value").value;
+            if(hour > 24 || hour < 0 || minute > 60 || minute < 0 || LatitudeValue > 180 || LatitudeValue<-180){
+                alert("invalid input!")
+                return;
+            }
             var LatitudeLocation = document.getElementById("LatitudePosition").value;  
             
             LatitudeValue = LatitudeLocation == "E"? LatitudeValue : -LatitudeValue;
-            var latitudeDiff  =  LatitudeValue-120;
-            // if(LatitudeLocation == "E"){
-            // }
-            // else{
-            //     var latitudeDiff  = LatitudeValue+120;
-            // }
+            var latitudeDiff  =  120 - LatitudeValue  ;
                 
             minuteDiff = latitudeDiff*4;
             var result = getTimeFromDiff(Number(hour),Number(minute),Number(minuteDiff));
@@ -88,9 +94,9 @@
             <div style="font-size: 2em;font-style: bold">Time calculator</div>
      <label for="input-time">Beijing Time:</label>
 
-     <input id="hour" type="text" value="00" style="width:20px"/>
+     <input id="hour" type="text" value="00" style="width:25px"/>
      <span>:</span>
-     <input id="minute" type="text" value="00" style="width:20px"/>
+     <input id="minute" type="text" value="00" style="width:25px"/>
     </div> 
     
 
@@ -116,6 +122,8 @@
                 <label id="hour-beijing">Q</label>
                 <label id="colon">A</label>
                 <label id="minute-beijing">Q</label> 
+                &nbsp&nbsp
+                <label id="before-or-later"?></label>
             </span>
     </div>
 
@@ -253,7 +261,7 @@
                     <td>15°W</td>
                 </tr>
               </table>
-              <label id="appendix">UTC+是西时区，UTC-是东时区</label>  
+              <label id="appendix">UTC+是东时区，UTC-是西时区</label>  
  </div>
 </fieldset>
 <p>
